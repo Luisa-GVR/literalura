@@ -61,13 +61,13 @@ public class Principal {
                     buscarLibro();
                     break;
                 case 2:
-
+                    verLibros();
                     break;
                 case 3:
 
                     break;
                 case 4:
-
+                    verAutores();
                     break;
                 case 5:
 
@@ -82,6 +82,21 @@ public class Principal {
         } while (opcion != 6);
     }
 
+    private void verAutores() {
+        System.out.println("Los autores que tienes actualmente son:");
+        List<Autor> autores = repositorioAutor.findAll();
+        for (Autor autor : autores) {
+            System.out.println(autor);
+        }
+    }
+
+    private void verLibros() {
+        System.out.println("Los libros que tienes actualmente son:");
+        List<Libro> libros = repositorio.findAll();
+        for (Libro libro : libros) {
+            System.out.println(libro);
+        }
+    }
 
 
     private DatosLibros getDatosLibro(){
@@ -91,7 +106,6 @@ public class Principal {
 
         String json = consumoAPI.obtenerDatos(URL_BASE + "?search=" + nombreBuscar);
 
-        System.out.println(json);
 
         //primer dato
 
@@ -103,7 +117,6 @@ public class Principal {
             e.printStackTrace();
         }
 
-        System.out.println(json);
 
 
         nombreAutor = buscarAutor(json);
@@ -127,10 +140,8 @@ public class Principal {
             e.printStackTrace();
         }
 
-        System.out.println(json);
 
         DatosAutor datos = getDatosAutor(json);
-
 
         Autor autor = new Autor(datos);
 
@@ -151,8 +162,9 @@ public class Principal {
 
         libro.setAutor(nombreAutor);
 
+        System.out.println(libro.toString());
+
         repositorio.save(libro);
-        System.out.println(datos);
 
     }
 

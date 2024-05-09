@@ -35,12 +35,11 @@ public class Libro {
 
     @Override
     public String toString() {
-        return "Libro{" +
+        return "El libro es: " +
                 "titulo='" + titulo + '\'' +
                 ", numDescargas=" + numDescargas +
                 ", idioma=" + idioma +
-                ", autor=" + autor +
-                '}';
+                ", autor=" + autor;
     }
 
     public String getTitulo() {

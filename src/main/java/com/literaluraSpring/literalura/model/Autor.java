@@ -31,11 +31,11 @@ public class Autor {
 
     @Override
     public String toString() {
-        return "Autor{" +
+        return "Los autores que tienes son:" +
                 "Nombre='" + nombre + '\'' +
                 ", fechaNacimiento=" + fechaNacimiento +
                 ", fechaFallecimiento=" + fechaFallecimiento +
-                ", libros=" + libros +
+                ", Con los siguientes libros=" + libros +
                 '}';
     }
 
