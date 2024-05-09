@@ -31,6 +31,7 @@ public class Principal {
     private List<Libro> libros;
     private Optional<Libro> libroBuscado;
 
+    String nombreAutor = null;
 
     @Autowired
     public Principal(LibreriaRepository repositorioLibreria, AutorRepository repositorioAutor) {
@@ -105,10 +106,8 @@ public class Principal {
         System.out.println(json);
 
 
-        String nombreAutor = buscarAutor(json);
-        System.out.println("holiwi3");
+        nombreAutor = buscarAutor(json);
 
-        System.out.println(nombreAutor);
 
         DatosLibros datos = conversor.obtenerDatos(json, DatosLibros.class);
         return datos;
@@ -149,6 +148,8 @@ public class Principal {
 
         DatosLibros datos = getDatosLibro();
         Libro libro = new Libro(datos);
+
+        libro.setAutor(nombreAutor);
 
         repositorio.save(libro);
         System.out.println(datos);

@@ -8,17 +8,13 @@ public record DatosLibros(
         @JsonAlias("title") String titulo,
         @JsonAlias("download_count") int numdescargas,
         @JsonAlias("languages") Idioma[] idiomas,
-        @JsonAlias("authors") DatosAutor[] autores
+        String autor
 ) {
 
     public Idioma[] idiomas() {
         return idiomas;
     }
 
-    @Override
-    public DatosAutor[] autores() {
-        return autores;
-    }
 
 
 }

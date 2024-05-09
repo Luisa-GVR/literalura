@@ -19,9 +19,8 @@ public class Libro {
     @Enumerated(EnumType.STRING)
     private Idioma idioma;
 
-    @ManyToOne
-    @JoinColumn(name = "autor_id")
-    private Autor autor ;
+    @Column(name = "autor_id")
+    private String autor;
 
     public Libro(){
 
@@ -29,20 +28,9 @@ public class Libro {
 
     public Libro(DatosLibros datosLibros) {
         this.titulo = datosLibros.titulo();
-        System.out.println("Titulo: " + this.titulo);
-
         this.numDescargas = datosLibros.numdescargas();
-        System.out.println("NumDescargas: " + this.numDescargas);
-
         this.idioma = Idioma.fromString(datosLibros.idiomas()[0].toString());
-        System.out.println("Idioma: " + idioma.toString());
-
-        /*
-        Autor[] autores = datosLibros.autores()[0].autores();
-        this.autor = autores[0];
-        System.out.println("Autor: " + this.autor.toString());
-*/
-
+        this.autor = datosLibros.autor();
     }
 
     @Override
@@ -71,13 +59,19 @@ public class Libro {
         this.numDescargas = numDescargas;
     }
 
+    public Idioma getIdioma() {
+        return idioma;
+    }
 
+    public void setIdioma(Idioma idioma) {
+        this.idioma = idioma;
+    }
 
-    public Autor getAutor() {
+    public String getAutor() {
         return autor;
     }
 
-    public void setAutor(Autor autor) {
+    public void setAutor(String autor) {
         this.autor = autor;
     }
 }
