@@ -37,9 +37,11 @@ public class Libro {
         this.idioma = Idioma.fromString(datosLibros.idiomas()[0].toString());
         System.out.println("Idioma: " + idioma.toString());
 
+        /*
         Autor[] autores = datosLibros.autores()[0].autores();
         this.autor = autores[0];
         System.out.println("Autor: " + this.autor.toString());
+*/
 
     }
 
