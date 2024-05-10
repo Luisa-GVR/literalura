@@ -3,10 +3,7 @@ package com.literaluraSpring.literalura.principal;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.literaluraSpring.literalura.model.Autor;
-import com.literaluraSpring.literalura.model.DatosAutor;
-import com.literaluraSpring.literalura.model.DatosLibros;
-import com.literaluraSpring.literalura.model.Libro;
+import com.literaluraSpring.literalura.model.*;
 import com.literaluraSpring.literalura.repository.AutorRepository;
 import com.literaluraSpring.literalura.repository.LibreriaRepository;
 import com.literaluraSpring.literalura.service.ConsumoAPI;
@@ -14,10 +11,7 @@ import com.literaluraSpring.literalura.service.ConvierteDatos;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Scanner;
+import java.util.*;
 
 public class Principal {
 
@@ -64,7 +58,7 @@ public class Principal {
                     verLibros();
                     break;
                 case 3:
-
+                    verLibrosPorIdioma();
                     break;
                 case 4:
                     verAutores();
@@ -81,6 +75,65 @@ public class Principal {
             }
         } while (opcion != 6);
     }
+
+    private void verLibrosPorIdioma() {
+        Idioma idioma = null;
+        int opcion;
+
+        do {
+            System.out.println("Elige el idioma:");
+            System.out.println("1. Español");
+            System.out.println("2. Inglés");
+            System.out.println("3. Francés");
+            System.out.println("4. Italiano");
+            System.out.println("5. Alemán");
+            System.out.println("6. Portugués");
+
+            try {
+                opcion = sc.nextInt();
+                switch (opcion) {
+                    case 1:
+                        idioma = Idioma.es;
+                        break;
+                    case 2:
+                        idioma = Idioma.en;
+                        break;
+                    case 3:
+                        idioma = Idioma.fr;
+                        break;
+                    case 4:
+                        idioma = Idioma.it;
+                        break;
+                    case 5:
+                        idioma = Idioma.de;
+                        break;
+                    case 6:
+                        idioma = Idioma.pt;
+                        break;
+                    default:
+                        System.out.println("Opción no válida");
+                        sc.nextLine(); // Consume the invalid input
+                        break;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Por favor, introduce un número válido.");
+                sc.nextLine(); // Consume the invalid input
+                opcion = 0;
+            }
+        } while (opcion < 1 || opcion > 6);
+
+        if (idioma != null) {
+            List<Libro> libros = repositorio.findByIdioma(idioma);
+            if (libros.isEmpty()) {
+                System.out.println("No hay libros en la base de datos con ese idioma.");
+            } else {
+                for (Libro libro : libros) {
+                    System.out.println(libro);
+                }
+            }
+        }
+    }
+
 
     private void verAutores() {
         System.out.println("Los autores que tienes actualmente son:");
