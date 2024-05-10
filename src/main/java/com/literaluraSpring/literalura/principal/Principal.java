@@ -46,7 +46,9 @@ public class Principal {
             System.out.println("3. Ver libros actuales por idioma");
             System.out.println("4. Ver autores actuales");
             System.out.println("5. Buscar autor por año");
-            System.out.println("6. Salir");
+            System.out.println("6. Top 10 mas descargados");
+            System.out.println("7. Buscar autores por nombre en base de datos");
+            System.out.println("8. Salir");
 
             opcion = scanner.nextInt();
 
@@ -64,16 +66,63 @@ public class Principal {
                     verAutores();
                     break;
                 case 5:
-
+                    buscarAutorFecha();
                     break;
                 case 6:
+                    top10();
+                    break;
+                case 7:
+                    buscarNombreAutor();
+                    break;
+                case 8:
 
                     break;
                 default:
                     System.out.println("Opción no válida");
                     break;
             }
-        } while (opcion != 6);
+        } while (opcion != 8);
+    }
+
+    private void buscarNombreAutor() {
+        System.out.println("Escribe el nombre del autor");
+        String nombre = sc.nextLine();
+
+        List<String> resultados = repositorioAutor.autorNombre(nombre);
+
+        System.out.println("Nombres encontrados;");
+
+        for (String nombreAutor : resultados) {
+            System.out.println(nombreAutor);
+        }
+
+    }
+
+
+    private void top10() {
+        System.out.println("El top 10 son los siguientes");
+
+        List<Object[]> top10 = repositorio.top10();
+        int rank = 1;
+
+        for (Object[] result : top10) {
+            String titulo = (String) result[0];
+            int numDescargas = (int) result[1];
+            System.out.println(rank + ". Título: " + titulo + ", Número de Descargas: " + numDescargas);
+            rank++;
+        }
+
+    }
+    private void buscarAutorFecha() {
+        System.out.println("Escribe la fecha en la que estuvieran vivos");
+        int fecha = sc.nextInt();
+
+        List<String> autoresVivos = repositorioAutor.autoresPorEpoca(fecha);
+        if (!autoresVivos.isEmpty()){
+            autoresVivos.forEach(nombre -> System.out.printf("Nombre del autor: %s\n", nombre));
+        } else {
+            System.out.println("No hay autores vivos en esa fecha");
+        }
     }
 
     private void verLibrosPorIdioma() {
@@ -117,7 +166,7 @@ public class Principal {
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Por favor, introduce un número válido.");
-                sc.nextLine(); // Consume the invalid input
+                sc.nextLine();
                 opcion = 0;
             }
         } while (opcion < 1 || opcion > 6);

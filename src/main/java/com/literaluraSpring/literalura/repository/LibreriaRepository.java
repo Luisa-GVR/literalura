@@ -14,5 +14,9 @@ public interface LibreriaRepository extends JpaRepository<Libro, Long> {
 
     List<Libro> findByIdioma(Idioma idioma);
 
+    @Query("SELECT l.titulo, l.numDescargas FROM Libro l ORDER BY l.numDescargas DESC")
+    List<Object[]> top10();
+
+
 
 }
